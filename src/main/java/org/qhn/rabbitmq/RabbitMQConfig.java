@@ -13,7 +13,6 @@ import org.springframework.retry.backoff.ExponentialBackOffPolicy;
 import org.springframework.retry.policy.AlwaysRetryPolicy;
 import org.springframework.retry.support.RetryTemplate;
 
-
 @Configuration
 public class RabbitMQConfig {
 

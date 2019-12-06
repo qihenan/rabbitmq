@@ -67,7 +67,7 @@ public class RabbitDlqProcessor {
             boolean flag = selectOrderPayStatusByUserId(userId);//true支付false未支付
             if (!flag) {
                 //业务处理 取消订单
-                logger.info("userId为{}的用户过期未支付，取消订单!", userId);
+                logger.info("userId为{}的用户十分钟内未支付，取消订单!", userId);
             }
             channel.basicAck(deliveryTag, false);
         }
