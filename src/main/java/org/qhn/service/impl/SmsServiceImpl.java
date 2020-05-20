@@ -10,6 +10,7 @@ import org.qhn.service.SmsService;
 import org.qhn.utils.sms.ChuangLanSmsUtil;
 import org.qhn.utils.sms.InformMessageEnum;
 import org.qhn.utils.sms.SmsSendResponse;
+import org.qhn.utils.sms.models.SendSmsResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
@@ -90,11 +91,11 @@ public class SmsServiceImpl implements SmsService {
             if (mobile == null || "".equals(mobile) || userId == null || "".equals(userId)) {
                 throw new Exception("短信消息队列-未获取到用户|手机号");
             }
-            SmsSendResponse smsSendResponse = ChuangLanSmsUtil
+            SendSmsResponse smsSendResponse = ChuangLanSmsUtil
                 .sendSingleMsg(tempMessage, mobile);
-            if (!"0".equals(smsSendResponse.getCode())) {
+            if (!"Ok".equals(smsSendResponse.getSendStatusSet()[0].getCode())) {
                 judge = false;
-                errorInfo = smsSendResponse.getErrorMsg();
+                errorInfo = smsSendResponse.getSendStatusSet()[0].getMessage();
                 logger.error("发送短信失败:error msg: ", errorInfo);
             }
         } catch (Exception e) {
